@@ -1,0 +1,26 @@
+.textField {
+    max-width: 400px;
+    min-width: 200px;
+    box-sizing: border-box;
+    padding: 4px 6px;
+    border: 1px solid var(--gray-text-color);
+
+    font-size: var(--font-size-s);
+    line-height: var(--line-height-s);
+
+    &:focus {
+        outline: none;
+    }
+
+    & + & {
+        margin-top: 14px;
+    }
+}
+
+.btn {
+    margin: 10px 0;
+    padding: 6px 0;
+    width: 120px;
+    background-color: azure;
+    border: 1px solid var(--gray-text-color);
+}

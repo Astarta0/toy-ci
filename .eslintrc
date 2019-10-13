@@ -1,0 +1,76 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "legacyDecorators": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "max-len": ["error", { "code": 200, "ignoreComments": true }],
+    "react/destructuring-assignment": ["warn", "always", { "ignoreClassFields": true }],
+    "react/no-array-index-key": ["warn"],
+    "react/self-closing-comp": ["warn", {
+      "component": true,
+      "html": true
+    }],
+    "react/no-unused-prop-types": ["warn"],
+    "react/prop-types": "off",
+    "react/jsx-handler-names": ["error"],
+    "react/jsx-filename-extension": ["off"],
+    "react/prefer-stateless-function": ["warn"],
+    "react/require-default-props": ["off"],
+    "comma-dangle": ["off"],
+    "quote-props:": ["off", "consistent-as-needed"],
+    "no-use-before-define": ["off"],
+    "no-unused-vars": ["warn"],
+    "no-nested-ternary": ["warn"],
+    "arrow-parens": ["error", "as-needed"],
+    "object-curly-newline": ["off", {
+      "ObjectExpression": { "multiline": true, "minProperties": 8},
+      "ObjectPattern": { "multiline": true, "minProperties": 8 },
+      "ImportDeclaration": { "multiline": true, "minProperties": 5 },
+      "ExportDeclaration": { "multiline": true, "minProperties": 5 }
+      }
+    ],
+    "arrow-body-style": ["warn", "as-needed", { "requireReturnForObjectLiteral": false }],
+    "prefer-const": ["error", {
+      "destructuring": "all",
+      "ignoreReadBeforeAssign": true
+    }],
+    "import/prefer-default-export": ["off"],
+    "no-underscore-dangle": "off",
+    "max-classes-per-file": ["error", 4],
+    "no-console": "off",
+    "no-param-reassign": "off",
+    "implicit-arrow-linebreak": "off",
+    "function-paren-newline": "off",
+    "indent": ["error", 4],
+    "quote-props": ["error", "as-needed"],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "array-bracket-spacing": ["error", "always"]
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "process": true,
+    "console": true,
+    "Promise": true
+  }
+}

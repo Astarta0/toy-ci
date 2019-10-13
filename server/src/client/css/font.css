@@ -1,0 +1,22 @@
+:root {
+    --font-size-xs: 13px ;
+    --line-height-xs: 18px ;
+
+    --font-size-s: 14px;
+    --line-height-s: 20px;
+
+    --font-size-m: 16px;
+    --line-height-m: 20px;
+
+    --font-size-l: 20px;
+    --line-height-l: 24px;
+
+    --font-size-xl: 24px;
+    --line-height-xl: 28px;
+
+    --font-size-xxl: 28px;
+    --line-height-xxl: 32px;
+
+    --font-size-xxxl: 32px;
+    --line-height-xxxl: 36px;
+}
