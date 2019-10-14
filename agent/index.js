@@ -5,7 +5,7 @@ const axios = require('axios');
 
 const config = require('./config');
 const AGENT_DATA = require('./agentData');
-const { delay, runBuild } = require('./utils');
+const { runBuild, startAgent } = require('./utils');
 
 const agentApp = express();
 agentApp.use(bodyParser.json());
@@ -23,37 +23,7 @@ agentApp.post('/build', (req, res) => {
     runBuild(build);
 });
 
-
-agentApp.listen(config.app_port, async function notifyServer(count = 0) {
-    try {
-        const { data } = await axios.post(`${config.server_protocol}://${baseURL}/notify_agent`, {
-            agent_port: config.app_port,
-            agent_host: config.app_host
-        });
-
-        if( !data || data.status !== 'OK' ) {
-            console.log(status);
-            throw new Error('Cannot register my instance');
-        }
-
-        AGENT_DATA.uuid = data.uuid;
-
-        console.log(`Agent successfully registered as ${data.uuid}!`);
-        console.log(`Agent listening on port ${config.app_port}!`);
-    } catch(e) {
-        console.error(`Failed to register on the server: `, e.message);
-
-        if(count < config.retry_connection - 1) {
-            console.error(`Will retry in ${config.retry_delay}ms`);
-            count++;
-            await delay(config.retry_delay);
-            await notifyServer(count)
-        } else {
-            console.error('Shotdown');
-            process.exit(1);
-        }
-    }
-});
+startAgent({ agentApp, config });
 
 setInterval(
     async () => {

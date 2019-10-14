@@ -3,6 +3,7 @@ const axios = require('axios');
 const util = require('util');
 const child = require('child_process');
 const rimrafCb = require('rimraf');
+const getPort = require('get-port');
 
 const rimraf = util.promisify(rimrafCb);
 
@@ -12,6 +13,10 @@ const AGENT_DATA = require('./agentData');
 const baseURL = `${config.server_host}:${config.server_port}`;
 
 const exec = logify(util.promisify(child.exec));
+
+async function getFreePort(port) {
+    return await getPort({ port: Number(port) });
+}
 
 function logify(fn){
     return (...args) => {
@@ -99,8 +104,45 @@ async function sendBuildResult(build, count = 0) {
     }
 }
 
+async function startAgent({ agentApp, config }) {
+    const app_port = await getFreePort(config.app_port);
+
+    agentApp.listen(app_port, async function notifyServer(count = 0) {
+        try {
+            const { data } = await axios.post(`${config.server_protocol}://${baseURL}/notify_agent`, {
+                agent_port: app_port,
+                agent_host: config.app_host
+            });
+
+            if( !data || data.status !== 'OK' ) {
+                console.log(status);
+                throw new Error('Cannot register my instance');
+            }
+
+            AGENT_DATA.uuid = data.uuid;
+
+            console.log(`Agent successfully registered as ${data.uuid}!`);
+            console.log(`Agent listening on port ${app_port}!`);
+        } catch(e) {
+            console.error(`Failed to register on the server: `, e.message);
+
+            if(count < config.retry_connection - 1) {
+                console.error(`Will retry in ${config.retry_delay}ms`);
+                count++;
+                await delay(config.retry_delay);
+                await notifyServer(count)
+            } else {
+                console.error('Shotdown');
+                process.exit(1);
+            }
+        }
+    });
+}
+
 module.exports = {
     delay,
     runBuild,
+    getFreePort,
+    startAgent,
     sendBuildResult
 };

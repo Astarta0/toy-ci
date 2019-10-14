@@ -22,7 +22,6 @@ apiRouter.get('/builds', utils.wrapRoute(
 apiRouter.get('/:id', utils.wrapRoute(
     async (req, res) => {
         const { id } = req.params;
-        console.log({ id });
 
         res.json({
             build: db.get('builds').find(b => b.id === id).value()

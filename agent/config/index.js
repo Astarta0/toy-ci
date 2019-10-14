@@ -7,8 +7,10 @@ const SERVER_HOST = process.env.SERVER_HOST;
 const SERVER_PORT = process.env.SERVER_PORT;
 const SERVER_PROTOCOL = process.env.SERVER_PROTOCOL;
 
+const priorityPort = port_arg || APP_PORT || config.agent.port;
+
 module.exports = {
-    app_port: port_arg || APP_PORT || config.agent.port,
+    app_port: priorityPort,
     app_host: host_arg || APP_HOST || config.agent.host,
     server_host: SERVER_HOST || config.server.host,
     server_port: SERVER_PORT || config.server.port,
