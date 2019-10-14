@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import * as actions from 'src/client/actions/actions';
 import { formatTimestampData } from 'src/client/utils';
+import s from './BuildPage.css';
 
 @withRouter
 @connect(
@@ -48,17 +49,20 @@ export default class BuildPage extends Component {
 
                 <br />
                 <div>Status: {status} {code && <span>(code {code})</span>}</div>
-                <div>Build command: {command}</div>
+                <br />
+                <div>Build command:
+                    <textarea className={s.textarea} readOnly={1} value={command}></textarea>
+                </div>
                 <br />
                 <div>
                     <div>
                         Errors & warnings:
-                        <div>{stderr}</div>
+                        <textarea className={s.textarea} readOnly={1} value={stderr}></textarea>
                     </div>
                     <br />
                     <div>
                         Build output:
-                        <div>{stdout}</div>
+                        <textarea className={s.textarea} value={stdout} readOnly={1}></textarea>
                     </div>
                 </div>
             </div>
