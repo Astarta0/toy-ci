@@ -5,6 +5,8 @@ import BuildParamsForm from '/src/client/components/BuildParamsForm';
 import BuildItem from '/src/client/components/BuildItem';
 import * as actions from '/src/client/actions/actions';
 
+import s from './IndexPage.css';
+
 @connect(
     state => ({
         builds: state.builds
@@ -16,7 +18,7 @@ import * as actions from '/src/client/actions/actions';
 export default class IndexPage extends Component {
     componentDidMount() {
         this.props.fetchBuilds();
-        setInterval(() => this.props.fetchBuilds(), 2000);
+        setInterval(() => this.props.fetchBuilds(), 3000);
     }
     render() {
         const { builds } = this.props;
@@ -26,12 +28,14 @@ export default class IndexPage extends Component {
             <>
                 <BuildParamsForm></BuildParamsForm>
 
-                { buildEntries.length > 0 && buildEntries.map(entries => {
-                    const [ buildID, build ] = entries;
-                    return (
-                        <BuildItem key={buildID} build={build}/>
-                    );
-                })}
+                <div className={s.root}>
+                    { buildEntries.length > 0 && buildEntries.map(entries => {
+                        const [ buildID, build ] = entries;
+                        return (
+                            <BuildItem key={buildID} build={build}/>
+                        );
+                    })}
+                </div>
             </>
         );
     }

@@ -9,14 +9,16 @@ const INITIAL_STATE = {
 
 export default function rootReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
-    case TYPE.RUN_BUILD_PENDING: {
+    case TYPE.RUN_BUILD_PENDING:
+    case TYPE.FETCH_BUILD_INFO_PENDING: {
         return {
             ...state,
             waiting: true,
         }
     }
 
-    case TYPE.RUN_BUILD_FAIL: {
+    case TYPE.RUN_BUILD_FAIL:
+    case TYPE.FETCH_BUILD_INFO_FAIL: {
         return {
             ...state,
             waiting: false,
@@ -49,6 +51,21 @@ export default function rootReducer(state = INITIAL_STATE, action) {
             error: null,
             builds: keyBy(builds, 'id')
         }
+    }
+
+    case TYPE.FETCH_BUILD_INFO_SUCCESS: {
+        const { build } = action.payload;
+
+        return {
+            ...state,
+            waiting: false,
+            error: null,
+            builds: {
+                ...state.builds,
+                [build.id]: build
+            }
+
+        };
     }
 
     default:

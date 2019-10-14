@@ -41,6 +41,9 @@ function combine(...commands) {
 
 async function runBuild(build) {
     const {id, commitHash, command, repositoryUrl} = build;
+    build = updateBuild({ build, props: {
+        start: Date.now()
+    }});
     const buildDir = `${os.tmpdir()}/${id}`;
 
     // удаляем папку на тот случай, если билд с таким айди был уже запущен
@@ -60,13 +63,13 @@ async function runBuild(build) {
             command
         ));
 
-        build = updateBuild({build, props: {stdout, stderr, code: 0 }});
+        build = updateBuild({ build, props: {stdout, stderr, code: 0, finished: Date.now() }});
 
         console.log(`Build ${build.id} has finished`);
 
     } catch (e) {
         const {code, message, stderr, stdout} = e;
-        build = updateBuild({build, props: {stdout, stderr, code}});
+        build = updateBuild({ build, props: {stdout, stderr, code, finished: Date.now() }});
         console.log(`Build ${build.id} has failed with code ${code} and message "${message}"`);
     }
 

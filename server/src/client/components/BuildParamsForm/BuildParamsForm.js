@@ -15,7 +15,6 @@ import s from './BuildparamsForm.css';
     }),
     dispatch => ({
         runBuild: ({ commitHash, command }) => dispatch(actions.runBuild({commitHash, command})),
-        getStats: () => dispatch(actions.getStats())
     })
 )
 
@@ -44,7 +43,7 @@ export default class BuildParamsForm extends Component {
     };
 
     handleClick = () => {
-        const { runBuild, getStats } = this.props;
+        const { runBuild } = this.props;
         const { commitHash, command } = this.state ;
 
         if(!command.value || !commitHash.value) return;
@@ -53,8 +52,6 @@ export default class BuildParamsForm extends Component {
             commitHash: commitHash.value,
             command: command.value
         });
-
-        // setInterval(() => getStats(), 1000);
 
         this.setState({
             commitHash: {

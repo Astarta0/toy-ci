@@ -7,22 +7,25 @@ import config from '../../config';
 import {AGENT_STATUSES, BUILD_STATUSES} from '../constants';
 import db from '../db';
 
-
 const apiRouter = express.Router();
+
 // '/' = '/api/v1/build/'
-
-// вернуть статистику
-apiRouter.get('/stats', utils.wrapRoute(
-    async (req, res) => {
-        res.json({});
-    }
-));
-
-// вернуть статистику
+// вернуть все сборки
 apiRouter.get('/builds', utils.wrapRoute(
     async (req, res) => {
         res.json({
             builds: db.get('builds').value()
+        });
+    }
+));
+
+apiRouter.get('/:id', utils.wrapRoute(
+    async (req, res) => {
+        const { id } = req.params;
+        console.log({ id });
+
+        res.json({
+            build: db.get('builds').find(b => b.id === id).value()
         });
     }
 ));
@@ -41,7 +44,10 @@ apiRouter.post('/', utils.wrapRoute(
             stdout: '',
             stderr: '',
             code: null,
-            agent: null
+            agent: null,
+            triggered: Date.now(),
+            start: null,
+            finished: null
         };
 
         db.get('builds').set(build.id, build).write();

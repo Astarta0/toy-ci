@@ -56,25 +56,24 @@ export const fetchBuilds = () => async dispatch => {
     }
 };
 
-
-export const getStats = () => async dispatch => {
-    // dispatch({
-    //     type: TYPE.RUN_BUILD_PENDING
-    // });
+export const fetchBuildInfo = id => async dispatch => {
+    dispatch({
+        type: TYPE.FETCH_BUILD_INFO_PENDING
+    });
 
     try {
-        const { data } = await axios.get(apiUrl + '/stats');
-        console.clear();
-        console.table(data.queue);
-        console.table(data.builds);
-        console.table(data.agents);
-        console.table(data.free);
-
+        const { data } = await axios.get(apiUrl + `/${id}`);
+        dispatch({
+            type: TYPE.FETCH_BUILD_INFO_SUCCESS,
+            payload: {
+                build: data.build
+            }
+        });
     } catch(e) {
-        // console.error(e);
-        // dispatch({
-        //     type: TYPE.RUN_BUILD_FAIL,
-        //     payload: { error: e.message }
-        // });
+        console.error(e);
+        dispatch({
+            type: TYPE.FETCH_BUILD_INFO_FAIL,
+            payload: { error: e.message }
+        });
     }
 };

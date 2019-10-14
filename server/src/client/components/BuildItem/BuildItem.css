@@ -1,0 +1,14 @@
+.root {
+    & + & {
+        margin-top: 10px;
+    }
+}
+
+.link {
+    text-decoration: none;
+    color: var(--link);
+}
+
+.status {
+    margin-left: 12px;
+}

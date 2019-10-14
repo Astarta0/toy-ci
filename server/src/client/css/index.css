@@ -14,5 +14,6 @@ body {
 
 :root {
     --gray-text-color: #414A64;
-    --common-background-color: #fff4f3;
+    --common-background-color: #fffff1;
+    --link: #20598d;
 }

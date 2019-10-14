@@ -48,6 +48,9 @@ app.post('/notify_build_result', (req, res) => {
         .set('status', status)
         .set('stdout', build.stdout)
         .set('stderr', build.stderr)
+        .set('start', build.start)
+        .set('code', build.code)
+        .set('finished', build.finished)
         .write();
 
     db.get('agents')
@@ -89,7 +92,7 @@ setInterval(
         }).map(agent => {
             console.log(`Agent ${agent.uuid} is dead :(`);
             db.get('agents').remove(a => a.uuid === agent.uuid).write();
-            const build = db.get('builds').find({ agent: agent.uuid }).value();
+            const build = db.get('builds').find({ agent: agent.uuid, status: BUILD_STATUSES.PROCESSING }).value();
             if (build) {
                 build.agent = null;
                 processingBuild(build.id);
