@@ -1,20 +1,17 @@
 Запуск сервера:
-`cd server && npm install && npm start`
-
+```
+cd server && npm install && npm start
 серверу можно передать параметры запуска, как аргументы ком. строки:
 npm start <PORT> <REPO_URL>
-
 или переменные окружения APP_PORT и REPOSITORY_URL
-
+```
 
 Запуск агента:
-
-`cd agent && npm install && npm start`
-
-агенту можно передать параметры запуска, как аргументы командной строки:
-npm start <PORT> <HOST>
-
+```
+cd agent && npm install && npm start
+агенту можно передать параметры запуска, как аргументы командной строки: npm start <PORT> <HOST>
 или как переменные окужения APP_PORT и APP_HOST
+```
 
 
 Агент должен корректно обрабатывать ситуацию, когда при старте не смог соединиться с сервером.
