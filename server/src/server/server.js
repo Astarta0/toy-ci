@@ -95,6 +95,7 @@ setInterval(
             const build = db.get('builds').find({ agent: agent.uuid, status: BUILD_STATUSES.PROCESSING }).value();
             if (build) {
                 build.agent = null;
+                build.status = BUILD_STATUSES.PENDING;
                 processingBuild(build.id);
             }
         }).value();
