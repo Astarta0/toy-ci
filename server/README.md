@@ -1,6 +1,9 @@
-# toy-ci
+ENV VARIABLES
+- APP_PORT
+- REPOSITORY_URL
+
+DEPENDENCES
+- node v12.6.0+
 
 Запуск сервера:
-npm start
-или
-APP_PORT=<port> REPOSITORY_URL=<url> npm start
+npm install && npm start <PORT> <REPO_URL>
