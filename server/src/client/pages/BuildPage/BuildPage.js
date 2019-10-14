@@ -48,7 +48,7 @@ export default class BuildPage extends Component {
                 <div> Finished at {formatTimestampData(finished)}</div>
 
                 <br />
-                <div>Status: {status} {code && <span>(code {code})</span>}</div>
+                <div>Status: {status} {(code && code !== 0) ? <span>(code {code})</span> : null}</div>
                 <br />
                 <div>Build command:
                     <textarea className={s.textarea} readOnly={1} value={command}></textarea>
