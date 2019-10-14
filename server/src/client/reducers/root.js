@@ -56,15 +56,18 @@ export default function rootReducer(state = INITIAL_STATE, action) {
     case TYPE.FETCH_BUILD_INFO_SUCCESS: {
         const { build } = action.payload;
 
+        const builds = build
+            ? {
+                ...state.builds,
+                [build.id]: build
+            }
+            : state.builds;
+
         return {
             ...state,
             waiting: false,
             error: null,
-            builds: {
-                ...state.builds,
-                [build.id]: build
-            }
-
+            builds
         };
     }
 

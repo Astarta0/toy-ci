@@ -18,8 +18,13 @@ import s from './IndexPage.css';
 export default class IndexPage extends Component {
     componentDidMount() {
         this.props.fetchBuilds();
-        setInterval(() => this.props.fetchBuilds(), 3000);
+        this.timerId = setInterval(() => this.props.fetchBuilds(), 3000);
     }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId);
+    }
+
     render() {
         const { builds } = this.props;
         const buildEntries =  Object.entries(builds);
