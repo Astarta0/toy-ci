@@ -11,7 +11,7 @@ import s from './BuildparamsForm.css';
 @connect(
     state => ({
         waiting: state.waiting,
-        error: state.error
+        runBuildError: state.runBuildError
     }),
     dispatch => ({
         runBuild: ({ commitHash, command }) => dispatch(actions.runBuild({commitHash, command})),
@@ -66,7 +66,7 @@ export default class BuildParamsForm extends Component {
 
     render() {
         const { commitHash: { value: commitHashValue }, command: { value: commandValue } } = this.state;
-        const { waiting } = this.props;
+        const { waiting, runBuildError } = this.props;
 
         return (
             <>
@@ -93,6 +93,7 @@ export default class BuildParamsForm extends Component {
                 </Button>
 
                 {waiting && <p>Please wait... </p>}
+                {runBuildError && <p>{runBuildError}</p>}
             </>
         );
     }

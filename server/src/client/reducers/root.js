@@ -4,6 +4,7 @@ import * as TYPE from 'src/client/actions/types';
 const INITIAL_STATE = {
     builds: {},
     error: null,
+    runBuildError: null,
     waiting: false
 };
 
@@ -17,7 +18,14 @@ export default function rootReducer(state = INITIAL_STATE, action) {
         }
     }
 
-    case TYPE.RUN_BUILD_FAIL:
+    case TYPE.RUN_BUILD_FAIL: {
+        return {
+            ...state,
+            waiting: false,
+            runBuildError: action.payload.error
+        }
+    }
+
     case TYPE.FETCH_BUILD_INFO_FAIL: {
         return {
             ...state,
@@ -32,7 +40,7 @@ export default function rootReducer(state = INITIAL_STATE, action) {
         return {
             ...state,
             waiting: false,
-            error: null,
+            runBuildError: null,
             builds: {
                 ...state.builds,
                 [build.id]: {

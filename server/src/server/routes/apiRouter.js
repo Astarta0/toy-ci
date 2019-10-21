@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import * as utils from '../utils';
 import config from '../../config';
-import {AGENT_STATUSES, BUILD_STATUSES} from '../constants';
+import { AGENT_STATUSES, BUILD_STATUSES, MAX_FIFO_SIZE } from '../constants';
 import db from '../db';
 
 const apiRouter = express.Router();
@@ -33,6 +33,15 @@ apiRouter.get('/:id', utils.wrapRoute(
 apiRouter.post('/', utils.wrapRoute(
     async (req, res) => {
         const { commitHash, command } = req.body;
+
+        // Проверим размер текущей очереди задач
+        const buildsFifoLength = db.get('buildsFifo').size().value();
+
+        if (buildsFifoLength >= MAX_FIFO_SIZE ) {
+            console.log('-- Maximum builds FIFO-stack size has been exceeded --');
+            res.json({ error: 'Maximum builds FIFO-stack size has been exceeded. Please, try later...' });
+            return;
+        }
 
         const build = {
             id: uuidv1(),

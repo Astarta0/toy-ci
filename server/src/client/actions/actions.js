@@ -23,7 +23,8 @@ export const runBuild = ({ commitHash, command }) => async dispatch => {
                 }
             });
         } else {
-            throw new Error('Cannot run build!');
+            const errorMessage = data && data.error || 'Cannot run build!';
+            throw new Error(errorMessage);
         }
 
     } catch(e) {
