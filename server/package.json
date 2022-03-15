@@ -32,7 +32,7 @@
     "express": "^4.17.1",
     "history": "^4.10.1",
     "ignore-styles": "^5.0.1",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "lowdb": "^1.0.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
